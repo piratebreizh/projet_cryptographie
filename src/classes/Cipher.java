@@ -37,6 +37,28 @@ public class Cipher implements ICipher {
 
     public void decode(File encoded, File key, File decoded) {
 
+        try {
+            //Encoded
+            InputStream inputStream = new FileInputStream(encoded);
+            InputStreamReader input = new InputStreamReader(inputStream);
+            BufferedReader br = new BufferedReader(input);
+            //Encoded
+            OutputStreamWriter outputStreamWriter = new FileWriter(decoded);
+            //Lecture
+            int intChar;
+            while ((intChar = br.read()) != -1) {
+                char ch = (char) intChar;
+                //Decodage
+                char chEncoded = getDecodeChar(ch, key);
+                outputStreamWriter.write(chEncoded);
+            }
+            br.close();
+            outputStreamWriter.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -93,6 +115,11 @@ public class Cipher implements ICipher {
     }
 
     public static char getEncodeChar(char c, File key) {
+
+        char ca = 'a';
+        return ca;
+    }
+    public static char getDecodeChar(char c, File key) {
 
         char ca = 'a';
         return ca;
