@@ -12,7 +12,7 @@ public class Application {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		ICipher cipher = new Cipher();
+		ICipher cipher = new MonoCipher();
 		File maCle = new File(BASE_PATH+"key.txt");
 		cipher.generateKey(maCle);
 

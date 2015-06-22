@@ -10,12 +10,12 @@ import java.util.Random;
 
 import interfaces.ICipher;
 
-public class Cipher implements ICipher {
+public class MonoCipher implements ICipher {
 	
 	private Map<Character, Character> keyAlphabet;
 	ArrayList<Character> listkey;
 
-	public Cipher(){
+	public MonoCipher(){
 		keyAlphabet = new HashMap<Character, Character>();
         listkey = new ArrayList<Character>();
         listkey.add('A');
