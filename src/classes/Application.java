@@ -6,14 +6,14 @@ import java.io.File;
 
 public class Application {
 
-	public static String BASE_PATH = "D:\\ESGI\\Cryptographie\\Substitution_monoalpha\\test\\";
+	public static String BASE_PATH = "";
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		ICipher cipher = new Cipher();
-		File maCle = new File(BASE_PATH+"maCLe.txt");
+		File maCle = new File(BASE_PATH+"key.txt");
 		cipher.generateKey(maCle);
 
 		File message = new File(BASE_PATH+"message.txt");
