@@ -1,5 +1,6 @@
 package classes;
 
+import attaques.MonoEncodedAttack;
 import interfaces.ICipher;
 
 import java.io.File;
@@ -23,6 +24,9 @@ public class Application {
 		cipher.encode(message, maCle, encoded);
 		cipher.decode(encoded, maCle, decoded);
 
+		File foundKey = new File(BASE_PATH+"foundKey.txt");
+		MonoEncodedAttack attack = new MonoEncodedAttack();
+		attack.findkey(encoded, foundKey);
 	}
 
 }
