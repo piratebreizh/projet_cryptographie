@@ -14,10 +14,16 @@ public class Application {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-        encodeCesar();
-        attackCesar();
+        encodeHomo();
 	}
 
+	public static void encodeHomo() {
+		HomophoniqueCipher h = new HomophoniqueCipher();
+		
+        File source = new File(BASE_PATH+"source.txt");
+		h.generateKeyMap(source);
+	}
+	
     public static void attackCesar(){
         BruteForce bruteForce = new BruteForce();
         File encoded = new File(BASE_PATH+"encodedCesar.txt");
@@ -69,4 +75,6 @@ public class Application {
 
         cipher.decode(encoded,foundKey,decodedAttack);
     }
+    
+    
 }
