@@ -109,21 +109,31 @@ public class MonoCipher implements ICipher {
     }
 
     public void generateKey(File key) {
-    	ArrayList<Character> listRandomKey = new ArrayList<Character>(listkey.size());
-    	for(Character item: listkey) 
-    		listRandomKey.add(item);
-    	long seed = System.nanoTime();
-        Collections.shuffle(listRandomKey, new Random(seed));
-
+    	Character[] charTable = listkey.toArray(new Character[listkey.size()]);
+        int currentIndex = charTable.length, randomIndex;
+        char temporaryValue;
         PrintWriter pw;
         try {
             pw = new PrintWriter(new FileOutputStream(key));
-            for (Character c : listRandomKey)
-                pw.print(c);
-            pw.close();
+        // While there remain elements to shuffle...
+        while (0 != currentIndex) {
+
+            // Pick a remaining element...
+            randomIndex = (int) Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            // And swap it with the current element.
+            temporaryValue = charTable[currentIndex];
+            charTable[currentIndex] = charTable[randomIndex];
+            charTable[randomIndex] = temporaryValue;
+       
+            pw.print(charTable[randomIndex]);
+        }
+        pw.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
+        } 
+        
     }
 
     public char getEncodeChar(char c) {
