@@ -174,11 +174,8 @@ public class MonoEncodedAttack {
 			int i = 0;
 			for(Character tempChar : this.mapEncodedNumberChar.keySet()){
 				if(this.frequence.size()>i){
-					//System.out.println(this.frequence.get(i));
-					System.out.println(tempChar);
 					mapKeyAlphabet.put(this.frequence.get(i) ,tempChar);
 					i++;
-
 				}
 			}
 			//ecrit la clé dans le bon ordre
@@ -186,7 +183,6 @@ public class MonoEncodedAttack {
 				Character tempChar = this.alphabet.charAt(y);
 				if(this.mapKeyAlphabet.containsKey(tempChar)){
 					outputStreamWriter.write(mapKeyAlphabet.get(tempChar));
-					//System.out.println(mapKeyAlphabet.get(tempChar));
 				}
 			}
 			outputStreamWriter.close();
