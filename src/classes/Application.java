@@ -19,7 +19,8 @@ public class Application {
 
     public static void attackCesar(){
         BruteForce bruteForce = new BruteForce();
-        bruteForce.
+        File encoded = new File(BASE_PATH+"encodedCesar.txt");
+        bruteForce.stringFromFile(encoded);
     }
 
 

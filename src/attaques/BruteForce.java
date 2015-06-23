@@ -126,20 +126,22 @@ public class BruteForce {
 			decodedMessages.put(key, cipher.decodeString(encodedString, key));
 		}
 	}
-	
-	public void stringFromFile(File encoded) throws Exception{
-		
-			BufferedReader br = new BufferedReader(new FileReader(encoded));
-	        StringBuilder sb = new StringBuilder();
-	        String line = br.readLine();
 
-	        while (line != null) {
-	            sb.append(line);
-	            sb.append("\n");
-	            line = br.readLine();
-	        }
-	        encodedString = sb.toString();
-	   
+	public void stringFromFile(File encoded) {
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(encoded));
+			StringBuilder sb = new StringBuilder();
+			String line = br.readLine();
+
+			while (line != null) {
+				sb.append(line);
+				sb.append("\n");
+				line = br.readLine();
+			}
+			encodedString = sb.toString();
+		} catch (Exception e) {
+
+		}
 	}
 
 
