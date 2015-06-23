@@ -23,6 +23,7 @@ import java.util.TreeMap;
 public class MonoEncodedAttack {
 
 	private ArrayList<Character> frequence;
+	private Map<Character,Integer> frequenceNumberChar;
 	private Map<Character,Integer> mapEncodedNumberChar;
 	private TreeMap<Character, Character> mapKeyAlphabet;
 	private static final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + " .,;:\"'";
@@ -32,41 +33,6 @@ public class MonoEncodedAttack {
 		this.initialisationMapEncodeNumberChar();
 		mapKeyAlphabet = new TreeMap<Character, Character>();
 		frequence = new ArrayList<Character>();
-		frequence.add('E');
-		frequence.add('A');
-		frequence.add('I');
-		frequence.add('S');
-		frequence.add('N');
-		frequence.add('R');
-		frequence.add('T');
-		frequence.add('O');
-		frequence.add('L');
-		frequence.add('U');
-		frequence.add('D');
-		frequence.add('C');
-		frequence.add('M');
-		frequence.add('P');
-		frequence.add(' ');
-		frequence.add('G');
-		frequence.add('B');
-		frequence.add('V');
-		frequence.add('H');
-		frequence.add('F');
-		frequence.add(',');
-		frequence.add('.');
-		frequence.add('0');
-		frequence.add('Q');
-		frequence.add('Y');
-		frequence.add('X');
-		frequence.add('J');
-		frequence.add(':');
-		frequence.add('K');
-		frequence.add('W');
-		frequence.add('Z');
-		frequence.add('"');
-		frequence.add(';');
-
-
 	}
 
 	private void initialisationMapEncodeNumberChar(){
@@ -106,6 +72,78 @@ public class MonoEncodedAttack {
 		mapEncodedNumberChar.put('"',new Integer(0));
 		mapEncodedNumberChar.put('\'',new Integer(0));
 	}
+	
+	private void initialisationfrequenceNumberChar(){
+		frequenceNumberChar = new HashMap<Character, Integer>();
+
+		frequenceNumberChar.put('A',new Integer(0));
+		frequenceNumberChar.put('B',new Integer(0));
+		frequenceNumberChar.put('C',new Integer(0));
+		frequenceNumberChar.put('D',new Integer(0));
+		frequenceNumberChar.put('E',new Integer(0));
+		frequenceNumberChar.put('F',new Integer(0));
+		frequenceNumberChar.put('G',new Integer(0));
+		frequenceNumberChar.put('H',new Integer(0));
+		frequenceNumberChar.put('I',new Integer(0));
+		frequenceNumberChar.put('J',new Integer(0));
+		frequenceNumberChar.put('K',new Integer(0));
+		frequenceNumberChar.put('L',new Integer(0));
+		frequenceNumberChar.put('M',new Integer(0));
+		frequenceNumberChar.put('N',new Integer(0));
+		frequenceNumberChar.put('O',new Integer(0));
+		frequenceNumberChar.put('P',new Integer(0));
+		frequenceNumberChar.put('Q',new Integer(0));
+		frequenceNumberChar.put('R',new Integer(0));
+		frequenceNumberChar.put('S',new Integer(0));
+		frequenceNumberChar.put('T',new Integer(0));
+		frequenceNumberChar.put('U',new Integer(0));
+		frequenceNumberChar.put('V',new Integer(0));
+		frequenceNumberChar.put('W',new Integer(0));
+		frequenceNumberChar.put('X',new Integer(0));
+		frequenceNumberChar.put('Y',new Integer(0));
+		frequenceNumberChar.put('Z',new Integer(0));
+		frequenceNumberChar.put(' ',new Integer(0));
+		frequenceNumberChar.put('.',new Integer(0));
+		frequenceNumberChar.put(',',new Integer(0));
+		frequenceNumberChar.put(';',new Integer(0));
+		frequenceNumberChar.put(':',new Integer(0));
+		frequenceNumberChar.put('"',new Integer(0));
+		frequenceNumberChar.put('\'',new Integer(0));
+	}
+	
+	public void createFrequence(File source){
+		try {
+
+			initialisationfrequenceNumberChar();
+			//Message
+			InputStream inputStream = new FileInputStream(source);
+			InputStreamReader input = new InputStreamReader(inputStream);
+			BufferedReader br = new BufferedReader(input);
+			//Lecture
+			int intChar;
+			while ((intChar = br.read()) != -1) {
+				char ch = (char) intChar;
+				if(this.frequenceNumberChar.containsKey(ch)){
+					Integer number = this.frequenceNumberChar.get(ch);
+					this.frequenceNumberChar.put(ch,++number);
+				}
+			}
+			br.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		//Tri de la MAP
+		this.frequenceNumberChar=sortByComparator(this.frequenceNumberChar);
+		
+		for(Character tempChar : this.frequenceNumberChar.keySet()){
+			frequence.add(tempChar);
+		}
+		
+	}
+	
 
 	public void findkey(File encoded, File foundedKey){
 
@@ -136,14 +174,19 @@ public class MonoEncodedAttack {
 			int i = 0;
 			for(Character tempChar : this.mapEncodedNumberChar.keySet()){
 				if(this.frequence.size()>i){
+					//System.out.println(this.frequence.get(i));
+					System.out.println(tempChar);
 					mapKeyAlphabet.put(this.frequence.get(i) ,tempChar);
 					i++;
+
 				}
 			}
+			//ecrit la clé dans le bon ordre
 			for(int y=0;y<this.alphabet.length();y++){
 				Character tempChar = this.alphabet.charAt(y);
 				if(this.mapKeyAlphabet.containsKey(tempChar)){
 					outputStreamWriter.write(mapKeyAlphabet.get(tempChar));
+					//System.out.println(mapKeyAlphabet.get(tempChar));
 				}
 			}
 			outputStreamWriter.close();
