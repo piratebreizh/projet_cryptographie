@@ -1,11 +1,6 @@
 package attaques;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -148,7 +143,7 @@ public class BruteForce {
     private void verocityDeLaSolutionEcriture(String _message, File _enCoded) {
 
         try {
-            OutputStreamWriter outputStreamWriter = new FileWriter(_enCoded);
+            PrintWriter pr = new PrintWriter(new FileOutputStream(_enCoded));
 
             numberIteration++;
             int numberOfMatch = 0;
@@ -165,15 +160,16 @@ public class BruteForce {
 
             if (bestResponse < numberOfMatch) {
                 bestResponse = numberOfMatch;
-                outputStreamWriter.write("********" + numberOfMatch + "/" + listeMotsConfirmation.size() + "***********");
-                outputStreamWriter.write(this.bestResponseText);
-                outputStreamWriter.write("********");
+                pr.println("********" + numberOfMatch + "/" + listeMotsConfirmation.size() + "***********");
+                pr.println(this.bestResponseText);
+                pr.println("********");
                 this.bestResponseText = _message;
             } else {
-                outputStreamWriter.write("********" + numberOfMatch + "/" + listeMotsConfirmation.size() + "***********");
-                outputStreamWriter.write(_message);
-                outputStreamWriter.write("********");
+                pr.println("********" + numberOfMatch + "/" + listeMotsConfirmation.size() + "***********");
+                pr.println(_message);
+                pr.println("********");
             }
+            pr.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
