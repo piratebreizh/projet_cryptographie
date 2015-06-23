@@ -134,12 +134,13 @@ public class CesarCipher implements ICipher {
 	public char getDecodeCharWithKey(char c, char key) {
 		int posCesar = alphabet.indexOf(key);
 		int posC = alphabet.indexOf(c);
-		int pos = (posC-posCesar)%alphabet.length();
-		if(pos>=0){
-			return alphabet.charAt(pos);
-		}else{
-			return c;
-		}
+        int length = alphabet.length();
+        int pos = (posC-posCesar)%length;
+        if(pos>=0){
+            return alphabet.charAt(pos);
+        }else{
+            return alphabet.charAt(pos+length);
+        }
 	}
 
 }
