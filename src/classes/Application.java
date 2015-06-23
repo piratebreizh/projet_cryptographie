@@ -14,16 +14,18 @@ public class Application {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-        encodeHomo();
+        encodeHomophonique();
 	}
 
-	public static void encodeHomo() {
-		HomophoniqueCipher h = new HomophoniqueCipher();
-		
+    public static void encodeHomophonique(){
+        File key = new File(BASE_PATH+"keyHomophonique.txt");
         File source = new File(BASE_PATH+"source.txt");
-		h.generateKeyMap(source);
-	}
-	
+
+        HomophoniqueCipher cipher = new HomophoniqueCipher();        
+        cipher.generateKeyMap(source);
+        cipher.generateKey(key);
+    }
+
     public static void attackCesar(){
         BruteForce bruteForce = new BruteForce();
         File encoded = new File(BASE_PATH+"encodedCesar.txt");

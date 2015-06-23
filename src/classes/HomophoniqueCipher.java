@@ -9,6 +9,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -30,6 +33,11 @@ public class HomophoniqueCipher implements ICipher {
 
     public HomophoniqueCipher(){
         generateKeyMap = new HashMap<>();
+        ArrayList<Byte> arrayList = new ArrayList<>();
+        arrayList.add((byte) 1);
+        arrayList.add((byte) 112);
+        arrayList.add((byte) 110);
+        generateKeyMap.put('A',arrayList);
         readMap = new HashMap<>();
         frequence = new ArrayList<Character>();
     }
@@ -147,10 +155,28 @@ public class HomophoniqueCipher implements ICipher {
 
     @Override
     public void generateKey(File key) {
-        //Lire la generateKeyMap
-
-        //Ecrire dans le fichier Key
-
+        try {
+            OutputStreamWriter outputStreamWriter = new FileWriter(key);
+            //Lire la generateKeyMap
+            for (int i = 0; i < alphabet.length(); i++) {
+                char charA = alphabet.charAt(i);
+                if (!generateKeyMap.containsKey(charA)) {
+                    continue;
+                }
+                ArrayList<Byte> arrayListB = generateKeyMap.get(charA);
+                if (arrayListB.size() == 0) {
+                    continue;
+                }
+                //Ecrire dans le fichier Key
+                outputStreamWriter.write((byte) arrayListB.size());
+                for (int b = 0; b < arrayListB.size(); b++) {
+                    outputStreamWriter.write(arrayListB.get(b));
+                }
+            }
+            outputStreamWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -163,8 +189,8 @@ public class HomophoniqueCipher implements ICipher {
     	createFrequence(source);
     	
     	//remplissage des valeurs possibles pour un élements de l'alphabet A
-    	for(byte i=0;i<255;i++){
-    		valeurspossibles.add(i);
+    	for(int i=0;i<255;i++){
+    		valeurspossibles.add((byte)i);
     	}
     	
     	for(Character c : frequenceNumberChar.keySet()){
@@ -174,7 +200,7 @@ public class HomophoniqueCipher implements ICipher {
     		//autant de valeur possibles en fonction de la fréquence du caractère
     		for(int j=0;j<=Math.floor(frequenceNumberChar.get(c)*100.0);j++){
     			byte b = valeurspossibles.get(random.nextInt(valeurspossibles.size()));
-    			valeurspossibles.remove(b);
+    			valeurspossibles.remove(valeurspossibles.indexOf(b));
     			valeurPourLeCar.add(b);
     		}
     		
