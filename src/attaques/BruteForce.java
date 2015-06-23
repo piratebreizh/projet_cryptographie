@@ -143,7 +143,7 @@ public class BruteForce {
     private void verocityDeLaSolutionEcriture(String _message, File _enCoded) {
 
         try {
-            PrintWriter pr = new PrintWriter(new FileOutputStream(_enCoded));
+            PrintWriter pr = new PrintWriter(new BufferedWriter( new FileWriter(_enCoded, true)));
 
             numberIteration++;
             int numberOfMatch = 0;
