@@ -3,6 +3,9 @@ package classes;
 import interfaces.ICipher;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +18,11 @@ public class HomophoniqueCipher implements ICipher {
 
     public HomophoniqueCipher(){
         generateKeyMap = new HashMap<>();
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        arrayList.add(1);
+        arrayList.add(12);
+        arrayList.add(10);
+        generateKeyMap.put('A',arrayList);
         readMap = new HashMap<>();
     }
 
@@ -30,10 +38,28 @@ public class HomophoniqueCipher implements ICipher {
 
     @Override
     public void generateKey(File key) {
-        //Lire la generateKeyMap
-
-        //Ecrire dans le fichier Key
-
+        try {
+            OutputStreamWriter outputStreamWriter = new FileWriter(key);
+            //Lire la generateKeyMap
+            for (int i = 0; i < alphabet.length(); i++) {
+                char charA = alphabet.charAt(i);
+                if (!generateKeyMap.containsKey(charA)) {
+                    continue;
+                }
+                ArrayList<Integer> arrayListB = generateKeyMap.get(charA);
+                if (arrayListB.size() == 0) {
+                    continue;
+                }
+                //Ecrire dans le fichier Key
+                outputStreamWriter.write(arrayListB.size());
+                for (int b = 0; b < arrayListB.size(); b++) {
+                    outputStreamWriter.write(arrayListB.get(b));
+                }
+            }
+            outputStreamWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

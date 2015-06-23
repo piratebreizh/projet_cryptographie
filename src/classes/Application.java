@@ -14,9 +14,15 @@ public class Application {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-        encodeCesar();
-        attackCesar();
+        encodeHomophonique();
 	}
+
+    public static void encodeHomophonique(){
+        File key = new File(BASE_PATH+"keyHomophonique.txt");
+
+        ICipher cipher = new HomophoniqueCipher();
+        cipher.generateKey(key);
+    }
 
     public static void attackCesar(){
         BruteForce bruteForce = new BruteForce();
