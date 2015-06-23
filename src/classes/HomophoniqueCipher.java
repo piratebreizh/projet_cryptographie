@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class HomophoniqueCipher implements ICipher {
 
+    private static final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + " .,;:\"'";
     private Map<Character, ArrayList<Integer>> generateKeyMap;
     private Map<Character, ArrayList<Integer>> readMap;
 
