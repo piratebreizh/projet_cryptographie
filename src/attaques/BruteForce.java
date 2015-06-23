@@ -106,6 +106,7 @@ public class BruteForce {
 			for (String decodedMessage : decodedMessages.values()) {
 				verocityDeLaSolutionEcriture(decodedMessage, _enCoded);
 			}
+			displayBestSolution(_enCoded);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -139,6 +140,25 @@ public class BruteForce {
 		}
 	}
 
+	private void displayBestSolution(File _enCoded){
+
+		if(this.bestResponse>0){
+			try {
+				PrintWriter pr = new PrintWriter(new BufferedWriter( new FileWriter(_enCoded, true)));
+
+				pr.println("-------<<<<<<< BEST SOLUTION >>>>>>>---------" + this.bestResponse + "/" + listeMotsConfirmation.size() + "***********");
+				pr.println(this.bestResponseText);
+				pr.println("********");
+
+				pr.close();
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
 
 	private void verocityDeLaSolutionEcriture(String _message, File _enCoded) {
 
@@ -157,9 +177,16 @@ public class BruteForce {
 				numberOfMatch += count;
 			}
 
+			if(numberOfMatch>this.bestResponse){
+				this.bestResponse = numberOfMatch;
+				this.bestResponseText = _message;
+			}
+
 			pr.println("********" + numberOfMatch + "/" + listeMotsConfirmation.size() + "***********");
 			pr.println(_message);
 			pr.println("********");
+
+
 			pr.close();
 		} catch (Exception e) {
 			e.printStackTrace();
