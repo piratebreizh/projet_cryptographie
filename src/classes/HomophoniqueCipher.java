@@ -13,15 +13,15 @@ import java.util.Map;
 public class HomophoniqueCipher implements ICipher {
 
     private static final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + " .,;:\"'";
-    private Map<Character, ArrayList<Integer>> generateKeyMap;
-    private Map<Character, ArrayList<Integer>> readMap;
+    private Map<Character, ArrayList<Byte>> generateKeyMap;
+    private Map<Character, ArrayList<Byte>> readMap;
 
     public HomophoniqueCipher(){
         generateKeyMap = new HashMap<>();
-        ArrayList<Integer> arrayList = new ArrayList<>();
-        arrayList.add(1);
-        arrayList.add(12);
-        arrayList.add(10);
+        ArrayList<Byte> arrayList = new ArrayList<>();
+        arrayList.add((byte) 1);
+        arrayList.add((byte) 112);
+        arrayList.add((byte) 110);
         generateKeyMap.put('A',arrayList);
         readMap = new HashMap<>();
     }
@@ -46,12 +46,12 @@ public class HomophoniqueCipher implements ICipher {
                 if (!generateKeyMap.containsKey(charA)) {
                     continue;
                 }
-                ArrayList<Integer> arrayListB = generateKeyMap.get(charA);
+                ArrayList<Byte> arrayListB = generateKeyMap.get(charA);
                 if (arrayListB.size() == 0) {
                     continue;
                 }
                 //Ecrire dans le fichier Key
-                outputStreamWriter.write(arrayListB.size());
+                outputStreamWriter.write((byte) arrayListB.size());
                 for (int b = 0; b < arrayListB.size(); b++) {
                     outputStreamWriter.write(arrayListB.get(b));
                 }
