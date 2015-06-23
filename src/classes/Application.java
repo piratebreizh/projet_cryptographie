@@ -34,7 +34,7 @@ public class Application {
         File message = new File(BASE_PATH+"messageCesar.txt");
         File encoded = new File(BASE_PATH+"encodedCesar.txt");
         File decoded = new File(BASE_PATH+"decodedCesar.txt");
-
+        cipher.generateKey(maCle);
         cipher.encode(message, maCle, encoded);
         cipher.decode(encoded, maCle, decoded);
     }

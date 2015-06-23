@@ -111,8 +111,9 @@ public class CesarCipher implements ICipher {
 		int posCesar = alphabet.indexOf(codeCesar);
 		int posC = alphabet.indexOf(c);
 
-		if(posC>=0){
-			return alphabet.charAt((posCesar+posC)%alphabet.length());
+        int pos = (posCesar+posC)%alphabet.length();
+		if(pos>=0){
+			return alphabet.charAt(pos);
 		}else{
 			return c;
 		}
