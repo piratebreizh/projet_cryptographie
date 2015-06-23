@@ -1,16 +1,26 @@
 package attaques;
 
+import classes.CesarCipher;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BruteForce {
 
+
+
+	private static final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + " .,;:\"'";
 	private String encodedString;
 	private ArrayList<String> listeMotsConfirmation;
+	private Map<Character, String> decodedMessages;
 	
 	BruteForce(){
+		decodedMessages = new HashMap<>();
+
 		listeMotsConfirmation = new ArrayList<String>();
 		listeMotsConfirmation.add("LE");
 		listeMotsConfirmation.add("DE");
@@ -85,11 +95,19 @@ public class BruteForce {
 	}
 	
 	private void runAttaque(File _message, File _enCoded){
-		
-		
+		createMapDecoded();
+
+	}
+
+	private void createMapDecoded(){
+		CesarCipher cipher = new CesarCipher();
+		for(int i=0; i<=alphabet.length() ; i++){
+			Character key = alphabet.charAt(i);
+			decodedMessages.put(key, cipher.decodeString(encodedString, key));
+		}
 	}
 	
-	private void stringFromFile(File encoded) throws Exception{
+	public void stringFromFile(File encoded) throws Exception{
 		
 			BufferedReader br = new BufferedReader(new FileReader(encoded));
 	        StringBuilder sb = new StringBuilder();

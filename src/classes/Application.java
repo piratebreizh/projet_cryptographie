@@ -1,5 +1,6 @@
 package classes;
 
+import attaques.BruteForce;
 import attaques.MonoEncodedAttack;
 import interfaces.ICipher;
 
@@ -15,6 +16,12 @@ public class Application {
 	public static void main(String[] args) {
         encodeCesar();
 	}
+
+    public static void attackCesar(){
+        BruteForce bruteForce = new BruteForce();
+        bruteForce.
+    }
+
 
     public static void encodeCesar(){
         ICipher cipher = new CesarCipher();

@@ -50,7 +50,6 @@ public class CesarCipher implements ICipher {
     @Override
     public void decode(File encoded, File key, File decoded) {
         try {
-
             //Encoded
             InputStream inputStream = new FileInputStream(encoded);
             InputStreamReader input = new InputStreamReader(inputStream);
@@ -73,6 +72,18 @@ public class CesarCipher implements ICipher {
             e.printStackTrace();
         }
 
+    }
+
+    public String decodeString(String encoded, Character key)
+    {
+        String decoded = "";
+        for(int i=0; i<=encoded.length() ; i++){
+            //Decodage
+            char chDecode = getDecodeChar(encoded.charAt(i));
+            decoded += chDecode;
+        }
+
+        return decoded;
     }
 
     @Override
