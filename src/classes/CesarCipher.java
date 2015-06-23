@@ -79,7 +79,7 @@ public class CesarCipher implements ICipher {
 		String decoded = "";
 		for(int i=0; i<encoded.length() ; i++){
 			//Decodage
-			char chDecode = getDecodeChar(encoded.charAt(i));
+			char chDecode = getDecodeCharWithKey(encoded.charAt(i), key);
 			decoded += chDecode;
 		}
 
@@ -111,7 +111,8 @@ public class CesarCipher implements ICipher {
 		int posCesar = alphabet.indexOf(codeCesar);
 		int posC = alphabet.indexOf(c);
 
-        int pos = (posCesar+posC)%alphabet.length();
+        int length = alphabet.length();
+        int pos = (posCesar+posC)%length;
 		if(pos>=0){
 			return alphabet.charAt(pos);
 		}else{
@@ -121,6 +122,17 @@ public class CesarCipher implements ICipher {
 
 	public char getDecodeChar(char c) {
 		int posCesar = alphabet.indexOf(codeCesar);
+		int posC = alphabet.indexOf(c);
+        int length = alphabet.length();
+		int pos = (posC-posCesar)%length;
+		if(pos>=0){
+			return alphabet.charAt(pos);
+		}else{
+			return alphabet.charAt(pos+length);
+		}
+	}
+	public char getDecodeCharWithKey(char c, char key) {
+		int posCesar = alphabet.indexOf(key);
 		int posC = alphabet.indexOf(c);
 		int pos = (posC-posCesar)%alphabet.length();
 		if(pos>=0){
