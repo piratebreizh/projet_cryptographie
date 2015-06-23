@@ -1,13 +1,18 @@
 package attaques;
 
-import classes.CesarCipher;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import classes.CesarCipher;
 
 public class BruteForce {
 
@@ -16,11 +21,19 @@ public class BruteForce {
 	private static final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + " .,;:\"'";
 	private String encodedString;
 	private ArrayList<String> listeMotsConfirmation;
+	private int bestResponse;
+	private String bestResponseText;
+	private OutputStreamWriter outputStreamWriter;
+	private static int numberIteration;
 	private Map<Character, String> decodedMessages;
-	
-	BruteForce(){
-		decodedMessages = new HashMap<>();
 
+
+
+	public BruteForce(){
+		decodedMessages = new HashMap<>();
+		this.bestResponse = 0;
+		this.bestResponseText = "";
+		this.numberIteration =0;
 		listeMotsConfirmation = new ArrayList<String>();
 		listeMotsConfirmation.add("LE");
 		listeMotsConfirmation.add("DE");
@@ -93,9 +106,16 @@ public class BruteForce {
 		listeMotsConfirmation.add("PRENDRE");
 
 	}
-	
+
 	private void runAttaque(File _message, File _enCoded){
 		createMapDecoded();
+		try {
+			outputStreamWriter = new FileWriter(_enCoded);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 
 	}
 
@@ -121,6 +141,40 @@ public class BruteForce {
 	        encodedString = sb.toString();
 	   
 	}
-	
-	
+
+
+
+
+	private void verocityDeLaSolutionEcriture(String _message, File _enCoded){
+
+		numberIteration++;
+		int numberOfMatch = 0;
+		for(String tempRegex : listeMotsConfirmation){
+			Pattern pattern = Pattern.compile(tempRegex);
+			Matcher  matcher = pattern.matcher(_message);
+			int count = 0;
+			while (matcher.find()){
+				count++;
+			}
+			numberOfMatch+=count;
+		}
+		try{
+
+		
+			if(bestResponse<numberOfMatch){
+				bestResponse = numberOfMatch;
+				outputStreamWriter.write("********" + numberOfMatch + "/"+listeMotsConfirmation.size() +"***********");
+				outputStreamWriter.write(this.bestResponseText);
+				outputStreamWriter.write("********");
+				this.bestResponseText = _message;
+			}else{
+				outputStreamWriter.write("********" + numberOfMatch + "/"+listeMotsConfirmation.size() +"***********");
+				outputStreamWriter.write(_message);
+				outputStreamWriter.write("********");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
 }
