@@ -33,11 +33,6 @@ public class HomophoniqueCipher implements ICipher {
 
     public HomophoniqueCipher(){
         generateKeyMap = new HashMap<>();
-        ArrayList<Byte> arrayList = new ArrayList<>();
-        arrayList.add((byte) 1);
-        arrayList.add((byte) 112);
-        arrayList.add((byte) 110);
-        generateKeyMap.put('A',arrayList);
         readMap = new HashMap<>();
         frequence = new ArrayList<Character>();
     }
@@ -128,11 +123,11 @@ public class HomophoniqueCipher implements ICipher {
 
 		// Sort list with comparator, to compare the Map values
 		Collections.sort(list, new Comparator<Map.Entry<Character, Float>>() {
-			public int compare(Map.Entry<Character, Float> o1,
-					Map.Entry<Character, Float> o2) {
-				return (o2.getValue()).compareTo(o1.getValue());
-			}
-		});
+            public int compare(Map.Entry<Character, Float> o1,
+                               Map.Entry<Character, Float> o2) {
+                return (o2.getValue()).compareTo(o1.getValue());
+            }
+        });
 
 		// Convert sorted map back to a Map
 		Map<Character, Float> sortedMap = new LinkedHashMap<Character, Float>();
@@ -188,24 +183,25 @@ public class HomophoniqueCipher implements ICipher {
     	
     	createFrequence(source);
     	
-    	//remplissage des valeurs possibles pour un élements de l'alphabet A
+    	//remplissage des valeurs possibles pour un ï¿½lements de l'alphabet A
     	for(int i=0;i<255;i++){
     		valeurspossibles.add((byte)i);
     	}
-    	
+        System.out.println(valeurspossibles.size());
     	for(Character c : frequenceNumberChar.keySet()){
     		ArrayList<Byte> valeurPourLeCar = new ArrayList<Byte>();
     		Random random = new Random();
     		
-    		//autant de valeur possibles en fonction de la fréquence du caractère
-    		for(int j=0;j<=Math.floor(frequenceNumberChar.get(c)*100.0);j++){
-    			byte b = valeurspossibles.get(random.nextInt(valeurspossibles.size()));
-    			valeurspossibles.remove(valeurspossibles.indexOf(b));
-    			valeurPourLeCar.add(b);
-    		}
-    		
-    		generateKeyMap.put(c, valeurPourLeCar);
+    		//autant de valeur possibles en fonction de la frï¿½quence du caractï¿½re
+            for (int j = 0; j <= Math.floor(frequenceNumberChar.get(c) * 200.0); j++) {
+                byte b = valeurspossibles.get(random.nextInt(valeurspossibles.size()));
+                valeurspossibles.remove(valeurspossibles.indexOf(b));
+                valeurPourLeCar.add(b);
+            }
+
+            generateKeyMap.put(c, valeurPourLeCar);
     	}
+        System.out.println(valeurspossibles.size());
     }
 
     /**
