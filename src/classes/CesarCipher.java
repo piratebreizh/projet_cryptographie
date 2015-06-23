@@ -77,7 +77,7 @@ public class CesarCipher implements ICipher {
     public String decodeString(String encoded, Character key)
     {
         String decoded = "";
-        for(int i=0; i<=encoded.length() ; i++){
+        for(int i=0; i<encoded.length() ; i++){
             //Decodage
             char chDecode = getDecodeChar(encoded.charAt(i));
             decoded += chDecode;

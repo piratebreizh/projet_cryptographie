@@ -15,12 +15,15 @@ public class Application {
 	 */
 	public static void main(String[] args) {
         encodeCesar();
+        attackCesar();
 	}
 
     public static void attackCesar(){
         BruteForce bruteForce = new BruteForce();
         File encoded = new File(BASE_PATH+"encodedCesar.txt");
+        File ve = new File(BASE_PATH+"encodedVeCesar.txt");
         bruteForce.stringFromFile(encoded);
+        bruteForce.runAttaque(ve);
     }
 
 

@@ -107,11 +107,13 @@ public class BruteForce {
 
 	}
 
-	private void runAttaque(File _message, File _enCoded){
+	public void runAttaque(File _enCoded){
 		createMapDecoded();
 		try {
-			outputStreamWriter = new FileWriter(_enCoded);
-		} catch (IOException e) {
+			for(String decodedMessage : decodedMessages.values()){
+				verocityDeLaSolutionEcriture(decodedMessage,_enCoded);
+			}
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -121,7 +123,7 @@ public class BruteForce {
 
 	private void createMapDecoded(){
 		CesarCipher cipher = new CesarCipher();
-		for(int i=0; i<=alphabet.length() ; i++){
+		for(int i=0; i<alphabet.length() ; i++){
 			Character key = alphabet.charAt(i);
 			decodedMessages.put(key, cipher.decodeString(encodedString, key));
 		}
