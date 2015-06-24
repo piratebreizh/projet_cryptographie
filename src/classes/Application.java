@@ -20,10 +20,15 @@ public class Application {
     public static void encodeHomophonique(){
         File key = new File(BASE_PATH+"keyHomophonique.txt");
         File source = new File(BASE_PATH+"source.txt");
+        File message = new File(BASE_PATH+"message.txt");
+        File encodedHP = new File(BASE_PATH+"encodedHP.txt");
+        File decodedHP = new File(BASE_PATH+"decodedHP.txt");
 
         HomophoniqueCipher cipher = new HomophoniqueCipher();        
         cipher.generateKeyMap(source);
         cipher.generateKey(key);
+        cipher.encode(message, key, encodedHP);
+        cipher.decode(encodedHP, key, decodedHP);
     }
 
     public static void attackCesar(){
