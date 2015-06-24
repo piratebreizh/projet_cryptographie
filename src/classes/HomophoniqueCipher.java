@@ -5,7 +5,12 @@ import interfaces.ICipher;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -203,7 +208,7 @@ public class HomophoniqueCipher implements ICipher {
 	 * @param key
 	 */
 	public void readKey(File _key){
-		readMap = new HashMap<Character, ArrayList<Integer>>();
+		readMap = new HashMap<Character, ArrayList<Byte>>();
 
 		InputStream is = null;
 		byte[] buffer=new byte[5];
@@ -230,7 +235,7 @@ public class HomophoniqueCipher implements ICipher {
 				Byte byte2 = new Byte(b);
 				if(modeEcritureB){
 					if(countNumberRead == numberOfElementB){
-						this.readMap.get(this.alphabet).add(e)
+						//this.readMap.get(this.alphabet).add(e)
 						modeEcritureB = false;
 						indiceAlphabet++;
 					}else{
@@ -240,7 +245,7 @@ public class HomophoniqueCipher implements ICipher {
 					//Le nombre d'élement dans B
 					numberOfElementB = byte2.intValue();
 					modeEcritureB = true;
-					this.readMap.put(this.alphabet.charAt(indiceAlphabet), new ArrayList<Integer>());
+					//this.readMap.put(this.alphabet.charAt(indiceAlphabet), new ArrayList<Integer>());
 				}
 
 				// convert byte to character
