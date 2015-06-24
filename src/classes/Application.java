@@ -14,8 +14,18 @@ public class Application {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-        encodeHomophonique();
+        encodePolyAlpha();
 	}
+
+    private static void encodePolyAlpha() {
+        File keyPA = new File(BASE_PATH+"keyPA.txt");
+        File message = new File(BASE_PATH+"message.txt");
+        File encodedPA = new File(BASE_PATH+"encodedPA.txt");
+        File decodedPA = new File(BASE_PATH+"decodedPA.txt");
+
+
+    }
+
 
     public static void encodeHomophonique(){
         File key = new File(BASE_PATH+"keyHomophonique.txt");
@@ -28,7 +38,7 @@ public class Application {
         cipher.generateKeyMap(source);
         cipher.generateKey(key);
         cipher.encode(message, key, encodedHP);
-        cipher.decode(encodedHP, key, decodedHP);
+//        cipher.decode(encodedHP, key, decodedHP);
     }
 
     public static void attackCesar(){
