@@ -139,7 +139,9 @@ public class HomophoniqueCipher implements ICipher {
 
     @Override
     public void encode(File message, File key, File encoded) {
+
     	readKey(key);
+
         try {
             //Message
             InputStream inputStream = new FileInputStream(message);
@@ -166,7 +168,9 @@ public class HomophoniqueCipher implements ICipher {
 
     @Override
     public void decode(File encoded, File key, File decoded) {
+
     	readKey(key);
+
 		try {
 			//Encoded
 			InputStream inputStream = new FileInputStream(encoded);
