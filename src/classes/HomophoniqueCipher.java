@@ -5,13 +5,7 @@ import interfaces.ICipher;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -141,12 +135,12 @@ public class HomophoniqueCipher implements ICipher {
     @Override
     public void encode(File message, File key, File encoded) {
 
-    }
+	}
 
-    @Override
-    public void decode(File encoded, File key, File decoded) {
+	@Override
+	public void decode(File encoded, File key, File decoded) {
 
-    }
+	}
 
     @Override
     public void generateKey(File key) {
@@ -204,12 +198,65 @@ public class HomophoniqueCipher implements ICipher {
         System.out.println(valeurspossibles.size());
     }
 
-    /**
-     * Charge dans readMap les données du fichier Key
-     * @param key
-     */
-    public void readKey(File key){
+	/**
+	 * Charge dans readMap les données du fichier Key
+	 * @param key
+	 */
+	public void readKey(File _key){
+		readMap = new HashMap<Character, ArrayList<Integer>>();
 
-    }
+		InputStream is = null;
+		byte[] buffer=new byte[5];
+		char c;
+
+		try{
+			// new input stream created
+			is = new FileInputStream(_key);
+
+			// read stream data into buffer
+			is.read(buffer);
+			
+			//true si on rentre en mode ecriture des variable de B, sinon on recupère le nombre de Byte
+			boolean modeEcritureB = false;
+			//Le nombre de Byte pour une lettre
+			int numberOfElementB = 0;
+			//l'indice de l'élement de B
+			int countNumberRead = 0;
+			//Indice de l'alphabet qu'on parcour
+			int indiceAlphabet=-1;
+			
+			for(byte b:buffer)
+			{
+				Byte byte2 = new Byte(b);
+				if(modeEcritureB){
+					if(countNumberRead == numberOfElementB){
+						this.readMap.get(this.alphabet).add(e)
+						modeEcritureB = false;
+						indiceAlphabet++;
+					}else{
+						
+					}
+				}else{
+					//Le nombre d'élement dans B
+					numberOfElementB = byte2.intValue();
+					modeEcritureB = true;
+					this.readMap.put(this.alphabet.charAt(indiceAlphabet), new ArrayList<Integer>());
+				}
+
+				// convert byte to character
+				c=(char)b;
+
+				// prints character
+				System.out.print(c);
+
+
+			}
+			if(is!=null)
+				is.close();
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 
 }
