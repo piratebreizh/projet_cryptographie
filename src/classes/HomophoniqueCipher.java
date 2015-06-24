@@ -295,7 +295,8 @@ public class HomophoniqueCipher implements ICipher {
 				Byte byte2 = new Byte(b);
 				if(modeEcritureB){
 					if(countNumberRead == numberOfElementB){
-						this.readMap.get(this.alphabet).add(e);
+						//this.readMap.get(this.alphabet).add(e)
+
 						modeEcritureB = false;
 						indiceAlphabet++;
 					}else{
@@ -305,7 +306,9 @@ public class HomophoniqueCipher implements ICipher {
 					//Le nombre d'élement dans B
 					numberOfElementB = byte2.intValue();
 					modeEcritureB = true;
-					this.readMap.put(this.alphabet.charAt(indiceAlphabet), new ArrayList<Byte>());
+
+					//this.readMap.put(this.alphabet.charAt(indiceAlphabet), new ArrayList<Integer>());
+
 				}
 
 				// convert byte to character
