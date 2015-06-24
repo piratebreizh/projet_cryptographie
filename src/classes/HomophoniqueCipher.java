@@ -139,7 +139,7 @@ public class HomophoniqueCipher implements ICipher {
 
     @Override
     public void encode(File message, File key, File encoded) {
-
+    	readKey(key);
         try {
             //Message
             InputStream inputStream = new FileInputStream(message);
@@ -166,6 +166,7 @@ public class HomophoniqueCipher implements ICipher {
 
     @Override
     public void decode(File encoded, File key, File decoded) {
+    	readKey(key);
 		try {
 			//Encoded
 			InputStream inputStream = new FileInputStream(encoded);
@@ -289,8 +290,25 @@ public class HomophoniqueCipher implements ICipher {
 			is = new FileInputStream(_key);
 
 			// read stream data into buffer
-			is.read(buffer);
+			//is.read(buffer);
 			
+			byte currentByte;
+			byte affectByte;
+			ArrayList<Byte> listByte = new ArrayList<Byte>();
+			int k = 0;
+			
+			for(byte i = 0; i<_key.length();i++){
+
+				currentByte = (byte) is.read();
+				for(byte j = 0;j<currentByte;j++){
+					affectByte = (byte) is.read();
+					listByte.add(affectByte);
+					i++;
+				}
+				readMap.put(frequence.get(k), listByte);
+				k++;
+			}
+	/*		
 			//true si on rentre en mode ecriture des variable de B, sinon on recupère le nombre de Byte
 			boolean modeEcritureB = false;
 			//Le nombre de Byte pour une lettre
@@ -325,7 +343,7 @@ public class HomophoniqueCipher implements ICipher {
 				System.out.print(c);
 
 
-			}
+			}*/
 			if(is!=null)
 				is.close();
 
