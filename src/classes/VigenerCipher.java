@@ -21,7 +21,8 @@ public class VigenerCipher implements ICipher{
             int intChar;
             while ((intChar = br.read()) != -1) {
                 char ch = (char) intChar;
-                char chEncoded = getEncodeChar(ch);
+                char dec = getDecalage();
+                char chEncoded = getEncodeChar(ch, dec);
                 //Encodage
                 outputStreamWriter.write(chEncoded);
             }
@@ -49,7 +50,8 @@ public class VigenerCipher implements ICipher{
             while ((intChar = br.read()) != -1) {
                 char ch = (char) intChar;
                 //Decodage
-                char chEncoded = getDecodeChar(ch);
+                char dec = getDecalage();
+                char chEncoded = getDecodeChar(ch, dec);
                 outputStreamWriter.write(chEncoded);
             }
             br.close();
@@ -62,14 +64,18 @@ public class VigenerCipher implements ICipher{
 
     }
 
+    private char getDecalage() {
+        return 'A';
+    }
+
     @Override
     public void generateKey(File key) {
 
     }
 
 
-    public char getEncodeChar(char c) {
-        int posCesar = alphabet.indexOf(codeCesar);
+    public char getEncodeChar(char c, char dec) {
+        int posCesar = alphabet.indexOf(dec);
         int posC = alphabet.indexOf(c);
 
         int length = alphabet.length();
@@ -81,8 +87,8 @@ public class VigenerCipher implements ICipher{
         }
     }
 
-    public char getDecodeChar(char c) {
-        int posCesar = alphabet.indexOf(codeCesar);
+    public char getDecodeChar(char c, char dec) {
+        int posCesar = alphabet.indexOf(dec);
         int posC = alphabet.indexOf(c);
         int length = alphabet.length();
         int pos = (length+posC-posCesar)%length;
