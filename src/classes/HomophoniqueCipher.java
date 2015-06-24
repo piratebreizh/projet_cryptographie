@@ -5,7 +5,14 @@ import interfaces.ICipher;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -16,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Map.Entry;
 
 public class HomophoniqueCipher implements ICipher {
 
@@ -132,16 +140,73 @@ public class HomophoniqueCipher implements ICipher {
 		return sortedMap;
 	}
 
-    @Override
     public void encode(File message, File key, File encoded) {
 
-	}
+        try {
+            //Message
+            InputStream inputStream = new FileInputStream(message);
+            InputStreamReader input = new InputStreamReader(inputStream);
+            BufferedReader br = new BufferedReader(input);
+            //Encoded
+            OutputStreamWriter outputStreamWriter = new FileWriter(encoded);
+            //Lecture
+            int intChar;
+            while ((intChar = br.read()) != -1) {
+                char ch = (char) intChar;
+                byte bEncoded = getEncodeByte(ch);
+                //Encodage
+                outputStreamWriter.write(bEncoded);
+            }
+            br.close();
+            outputStreamWriter.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-	@Override
-	public void decode(File encoded, File key, File decoded) {
+    public void decode(File encoded, File key, File decoded) {
 
-	}
+        try {
+            //Encoded
+            InputStream inputStream = new FileInputStream(encoded);
+            InputStreamReader input = new InputStreamReader(inputStream);
+            BufferedReader br = new BufferedReader(input);
+            //Encoded
+            OutputStreamWriter outputStreamWriter = new FileWriter(decoded);
+            //Lecture
+            int intChar;
+            while ((intChar = br.read()) != -1) {
+                char ch = (char) intChar;
+                //Decodage
+                char chEncoded = getDecodeChar(ch);
+                outputStreamWriter.write(chEncoded);
+            }
+            br.close();
+            outputStreamWriter.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+    }
+
+    public byte getEncodeByte(char c) {
+    	Random random = new Random();
+        if (readMap.containsKey(c)) {
+        	ArrayList<Byte> bytePossibles = readMap.get(c);
+        	int v = random.nextInt(bytePossibles.size());
+            return bytePossibles.get(v);
+        } else {
+            return -1;
+        }
+    }
+
+    public char getDecodeChar(char c) {
+       return c;
+    }
     @Override
     public void generateKey(File key) {
         try {
@@ -203,7 +268,7 @@ public class HomophoniqueCipher implements ICipher {
 	 * @param key
 	 */
 	public void readKey(File _key){
-		readMap = new HashMap<Character, ArrayList<Integer>>();
+		readMap = new HashMap<Character, ArrayList<Byte>>();
 
 		InputStream is = null;
 		byte[] buffer=new byte[5];
@@ -230,7 +295,7 @@ public class HomophoniqueCipher implements ICipher {
 				Byte byte2 = new Byte(b);
 				if(modeEcritureB){
 					if(countNumberRead == numberOfElementB){
-						this.readMap.get(this.alphabet).add(e)
+						this.readMap.get(this.alphabet).add(e);
 						modeEcritureB = false;
 						indiceAlphabet++;
 					}else{
@@ -240,7 +305,7 @@ public class HomophoniqueCipher implements ICipher {
 					//Le nombre d'élement dans B
 					numberOfElementB = byte2.intValue();
 					modeEcritureB = true;
-					this.readMap.put(this.alphabet.charAt(indiceAlphabet), new ArrayList<Integer>());
+					this.readMap.put(this.alphabet.charAt(indiceAlphabet), new ArrayList<Byte>());
 				}
 
 				// convert byte to character
