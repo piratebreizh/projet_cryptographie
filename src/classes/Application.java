@@ -23,7 +23,9 @@ public class Application {
         File encodedPA = new File(BASE_PATH+"encodedPA.txt");
         File decodedPA = new File(BASE_PATH+"decodedPA.txt");
 
-
+        ICipher cipher = new VigenerCipher();
+        cipher.encode(message,keyPA,encodedPA);
+        cipher.decode(encodedPA,keyPA,decodedPA);
     }
 
 
