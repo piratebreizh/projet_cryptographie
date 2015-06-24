@@ -298,19 +298,21 @@ public class HomophoniqueCipher implements ICipher {
 			
 			byte currentByte;
 			byte affectByte;
-			ArrayList<Byte> listByte = new ArrayList<Byte>();
 			int k = 0;
 			
 			for(byte i = 0; i<_key.length();i++){
+				if(k < alphabet.length()) {
+					ArrayList<Byte> listByte = new ArrayList<Byte>();
 
-				currentByte = (byte) is.read();
-				for(byte j = 0;j<currentByte;j++){
-					affectByte = (byte) is.read();
-					listByte.add(affectByte);
-					i++;
+					currentByte = (byte) is.read();
+					for (byte j = 0; j < currentByte; j++) {
+						affectByte = (byte) is.read();
+						listByte.add(affectByte);
+						i++;
+					}
+					readMap.put(alphabet.charAt(k), listByte);
+					k++;
 				}
-				readMap.put(frequence.get(k), listByte);
-				k++;
 			}
 	/*		
 			//true si on rentre en mode ecriture des variable de B, sinon on recupère le nombre de Byte
