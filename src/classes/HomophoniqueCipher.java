@@ -6,13 +6,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -23,7 +21,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Map.Entry;
 
 public class HomophoniqueCipher implements ICipher {
 
@@ -140,6 +137,7 @@ public class HomophoniqueCipher implements ICipher {
 		return sortedMap;
 	}
 
+    @Override
     public void encode(File message, File key, File encoded) {
 
         try {
@@ -166,32 +164,47 @@ public class HomophoniqueCipher implements ICipher {
         }
     }
 
+    @Override
     public void decode(File encoded, File key, File decoded) {
-
-        try {
-            //Encoded
-            InputStream inputStream = new FileInputStream(encoded);
-            InputStreamReader input = new InputStreamReader(inputStream);
-            BufferedReader br = new BufferedReader(input);
-            //Encoded
-            OutputStreamWriter outputStreamWriter = new FileWriter(decoded);
-            //Lecture
-            int intChar;
-            while ((intChar = br.read()) != -1) {
-                char ch = (char) intChar;
-                //Decodage
-                char chEncoded = getDecodeChar(ch);
-                outputStreamWriter.write(chEncoded);
-            }
-            br.close();
-            outputStreamWriter.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+		try {
+			//Encoded
+			InputStream inputStream = new FileInputStream(encoded);
+			InputStreamReader input = new InputStreamReader(inputStream);
+			BufferedReader br = new BufferedReader(input);
+			//Encoded
+			OutputStreamWriter outputStreamWriter = new FileWriter(decoded);
+			//Lecture
+			int intChar;
+			while ((intChar = br.read()) != -1) {
+				byte ch = (byte) intChar;
+				//Decodage
+				char chEncoded = getDecodeChar(ch);
+				outputStreamWriter.write(chEncoded);
+			}
+			br.close();
+			outputStreamWriter.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
     }
+
+	private char getDecodeChar(byte b) {
+		char c = (char) b;
+
+		for(Character ch : readMap.keySet()){
+			ArrayList<Byte> bytes = readMap.get(ch);
+			for(int i=0 ; i<bytes.size() ; i++){
+				if(b == bytes.get(i)){
+					return ch;
+				}
+			}
+		}
+
+		return c;
+	}
 
     public byte getEncodeByte(char c) {
     	Random random = new Random();
@@ -204,9 +217,6 @@ public class HomophoniqueCipher implements ICipher {
         }
     }
 
-    public char getDecodeChar(char c) {
-       return c;
-    }
     @Override
     public void generateKey(File key) {
         try {
@@ -265,7 +275,7 @@ public class HomophoniqueCipher implements ICipher {
 
 	/**
 	 * Charge dans readMap les données du fichier Key
-	 * @param key
+	 * @param _key
 	 */
 	public void readKey(File _key){
 		readMap = new HashMap<Character, ArrayList<Byte>>();
@@ -296,7 +306,6 @@ public class HomophoniqueCipher implements ICipher {
 				if(modeEcritureB){
 					if(countNumberRead == numberOfElementB){
 						//this.readMap.get(this.alphabet).add(e)
-
 						modeEcritureB = false;
 						indiceAlphabet++;
 					}else{
@@ -306,9 +315,7 @@ public class HomophoniqueCipher implements ICipher {
 					//Le nombre d'élement dans B
 					numberOfElementB = byte2.intValue();
 					modeEcritureB = true;
-
 					//this.readMap.put(this.alphabet.charAt(indiceAlphabet), new ArrayList<Integer>());
-
 				}
 
 				// convert byte to character
