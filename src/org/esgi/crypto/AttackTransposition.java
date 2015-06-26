@@ -13,6 +13,13 @@ public class AttackTransposition implements IExecute{
         TranspositionAttack attack = new TranspositionAttack();
         attack.createFrequence(source);
         attack.launchAttack(encoded, decoded,od);
+        // On cherche les positions des lettres
+        // Pour les lettres ayant une fréquence faible dans la langue française
+            // on cherche les annagrammes de mots autour de ces positions
+        //taille clé possibles = diviseurs de la longueur du message encodé
+        //En fonction des annagrammes trouvés
+            //on peut déterminer une répétition de la transposition
+            //qui sera donc la clé
     }
     
     public static void main(String[] args) {
