@@ -23,10 +23,11 @@ public class Application {
         File source = new File(BASE_PATH+"source.txt");
         File encodedTranspo = new File(BASE_PATH+"encodedTranspo.txt");
         File attackOutpuTranspo = new File(BASE_PATH+"attackOutpuTranspo.txt");
+        File od = new File("liste_mots.txt");
 
         TranspositionAttack transpositionAttack = new TranspositionAttack();
         transpositionAttack.createFrequence(source);
-        transpositionAttack.launchAttack(encodedTranspo, attackOutpuTranspo);
+        transpositionAttack.launchAttack(encodedTranspo, attackOutpuTranspo,od);
 
     }
 

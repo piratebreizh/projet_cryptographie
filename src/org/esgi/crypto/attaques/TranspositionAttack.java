@@ -20,19 +20,19 @@ public class TranspositionAttack {
         findLettresPositions(encoded);
         readFile(encoded);
         try {
+        	PrintWriter pr = new PrintWriter(new BufferedWriter( new FileWriter(out, true)));
 			searchWordWithLetterInFile(dic,"K");
 		
         for(int i=0;i<10;i++){
-        	for(int <getStringAroundPosition(positionsLettres.get('K'), i, i);j++){
-        		ArrayList<String> a = anagram();	
-        	}
-        	for(String object: list){
-        		  System.out.println(object)
-        		}
-        	
-        	PrintWriter pr = new PrintWriter(new BufferedWriter( new FileWriter(out, true)));
-        	
-        	pr.println(
+        	ArrayList<Integer> pos = positionsLettres.get('K');
+        	for(Integer j: pos){
+        		String s = getStringAroundPosition((int)j, i, i);
+        		ArrayList<String> a = anagram(s);	
+    			for(String an: a){        					
+    				pr.println(a);
+    			}        				
+      		}
+
         }
         } catch (Exception e) {
 			// TODO Auto-generated catch block
