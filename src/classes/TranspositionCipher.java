@@ -18,8 +18,6 @@ import java.util.Collections;
 public class TranspositionCipher implements ICipher {
     private ArrayList<Integer> keyList;
 
-    private int BLOCK_LENGTH;
-
     @Override
     public void encode(File message, File key, File encoded) {
         try {
@@ -51,7 +49,7 @@ public class TranspositionCipher implements ICipher {
             StringBuilder block = null;
             
             while ((intChar = br.read()) != -1) {
-                if(block.length()<BLOCK_LENGTH){
+                if(block.length()<keyList.size()){
                 	block.append(intChar);
                 }else{
                 	String decodedBlock = getDecodedBlock(block);
