@@ -9,6 +9,9 @@ public class TranspositionAttack {
     private ArrayList<Character> frequenceInverse;
     private Map<Character, ArrayList<Integer>> positionsLettres;
     private String content;
+    private ArrayList<Character> frequence;
+    
+    private ArrayList<String> wordWithLetter;
 
     public TranspositionAttack() {
         frequenceInverse = new ArrayList<Character>();
@@ -137,6 +140,30 @@ public class TranspositionAttack {
         }
         return sortedMap;
     }
+    
+    public void searchWordWithLetterInFile(File dic,CharSequence c) throws Exception{
+    	wordWithLetter = new ArrayList<String>();
+    	try (BufferedReader br = new BufferedReader(new FileReader(dic))) {
+    	    String line;
+    	    while ((line = br.readLine()) != null) {
+    	       if (line.contains(c)){
+    	    	   wordWithLetter.add(line);
+    	       }
+    	    }
+    	}
+    }
+    
+    public ArrayList<String> anagram(String s){    	
+    	ArrayList<String> aPossibles = new ArrayList<>();
+    	for (int i = 0; i < s.length(); i++) {
+            final List<String> remaining = anagram(s.substring(0, i) + s.substring(i + 1));
+            for (int j = 0; j < remaining.size(); j++) {
+            	aPossibles.add(s.charAt(i) + remaining.get(j));
+            }
+        }
+    	return aPossibles;
+    }
+    
 
     public void findLettresPositions(File encoded){
         positionsLettres = new HashMap<>();
