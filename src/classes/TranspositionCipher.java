@@ -1,6 +1,7 @@
 package classes;
 
 import interfaces.ICipher;
+import org.w3c.dom.html.HTMLTableColElement;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,10 +9,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 
 public class TranspositionCipher implements ICipher {
-    private ArrayList<Byte> keyList;
+    private ArrayList<Integer> keyList;
+    private static int sizeKey = 10;
+
 
     @Override
     public void encode(File message, File key, File encoded) {
@@ -91,6 +94,7 @@ public class TranspositionCipher implements ICipher {
         for(int i=0 ; i<keyList.size() ; i++){
             if(keyList.get(i) < keyList.size()) {
                 int index = keyList.indexOf(i);
+                if(codedString.length() > index && index >= 0 )
                 builder.append(codedString.charAt(index));
             }
         }
@@ -99,12 +103,24 @@ public class TranspositionCipher implements ICipher {
     }
 
     @Override
-    
     public void generateKey(File key) {
+        ArrayList<Integer> listInt = new ArrayList<>();
+        for(int i=0 ; i < sizeKey ; i++){
+            listInt.add(i);
+        }
+        Collections.shuffle(listInt);
+        try {
+            FileWriter writer = new FileWriter(key);
+            for(int i=0 ; i < listInt.size() ; i++) {
+                writer.write(listInt.get(i));
+            }
+            writer.flush();
+            writer.close();
+        }catch (Exception e){}
     }
 
     private void readKey(File key) {
-    	keyList = new ArrayList<Byte>();
+    	keyList = new ArrayList<Integer>();
 		InputStream is = null;
 		try{
 			// new input stream created
@@ -114,7 +130,7 @@ public class TranspositionCipher implements ICipher {
 			
 			for(byte i = 0; i<key.length();i++){
 				currentByte = (byte) is.read();
-				keyList.add(currentByte);
+				keyList.add((int) currentByte);
 			}
 			
 			if(is!=null)
