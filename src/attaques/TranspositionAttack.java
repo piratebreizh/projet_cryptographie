@@ -6,10 +6,39 @@ import java.util.*;
 public class TranspositionAttack {
 
     private Map<Character, Float> frequenceNumberChar;
-    private ArrayList<Character> frequence;
+    private ArrayList<Character> frequenceInverse;
+    private Map<Character, ArrayList<Integer>> positionsLettres;
+    private String content;
 
     public TranspositionAttack() {
-        frequence = new ArrayList<Character>();
+        frequenceInverse = new ArrayList<Character>();
+    }
+
+    public void launchAttack(File encoded, File out){
+        findLettresPositions(encoded);
+        readFile(encoded);
+    }
+
+    private void readFile(File encoded) {
+        StringBuilder builder = new StringBuilder();
+
+        try {
+            initialisationfrequenceNumberChar();
+            //Message
+            FileReader reader = new FileReader(encoded);
+            //Lecture
+            int intChar;
+            while ((intChar = reader.read()) != -1) {
+                builder.append((char) intChar);
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        content = builder.toString();
     }
 
     public void createFrequence(File source) {
@@ -43,7 +72,7 @@ public class TranspositionAttack {
         this.frequenceNumberChar = sortByComparatorFloat(this.frequenceNumberChar);
 
         for (Character tempChar : this.frequenceNumberChar.keySet()) {
-            frequence.add(tempChar);
+            frequenceInverse.add(tempChar);
         }
 
     }
@@ -96,7 +125,7 @@ public class TranspositionAttack {
         Collections.sort(list, new Comparator<Map.Entry<Character, Float>>() {
             public int compare(Map.Entry<Character, Float> o1,
                                Map.Entry<Character, Float> o2) {
-                return (o2.getValue()).compareTo(o1.getValue());
+                return (o1.getValue()).compareTo(o2.getValue());
             }
         });
 
@@ -108,4 +137,30 @@ public class TranspositionAttack {
         }
         return sortedMap;
     }
+
+    public void findLettresPositions(File encoded){
+        positionsLettres = new HashMap<>();
+        try{
+            FileReader reader = new FileReader(encoded);
+            int intChar;
+            int position = 0;
+            while ((intChar = reader.read()) != -1){
+                char ch = (char) intChar;
+                ArrayList<Integer> positions = new ArrayList<>();
+                if(positionsLettres.containsKey(ch))
+                    positions = positionsLettres.get(ch);
+                positions.add(position);
+                positionsLettres.put(ch, positions);
+                position++;
+            }
+            reader.close();
+
+        }catch (Exception e){}
+    }
+
+    private String getStringAroundPosition(int position, int ecartGauche, int ecartDroite){
+        return content.substring(position-ecartGauche, position+ecartDroite);
+    }
+
+
 }

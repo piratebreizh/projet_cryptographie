@@ -2,6 +2,7 @@ package classes;
 
 import attaques.BruteForce;
 import attaques.MonoEncodedAttack;
+import attaques.TranspositionAttack;
 import interfaces.ICipher;
 
 import java.io.File;
@@ -14,8 +15,20 @@ public class Application {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-        encodeTransposition();
+//        encodeTransposition();
+        attackTransposition();
 	}
+
+    private static void attackTransposition(){
+        File source = new File(BASE_PATH+"source.txt");
+        File encodedTranspo = new File(BASE_PATH+"encodedTranspo.txt");
+        File attackOutpuTranspo = new File(BASE_PATH+"attackOutpuTranspo.txt");
+
+        TranspositionAttack transpositionAttack = new TranspositionAttack();
+        transpositionAttack.createFrequence(source);
+        transpositionAttack.launchAttack(encodedTranspo, attackOutpuTranspo);
+
+    }
 
     private static void encodeTransposition() {
         File keyTranspo = new File(BASE_PATH+"keyTranspo.txt");
