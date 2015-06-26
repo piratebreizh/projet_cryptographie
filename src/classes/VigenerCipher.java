@@ -74,7 +74,7 @@ public class VigenerCipher implements ICipher{
     }
 
     private char getDecalage() {
-        indexKey = (indexKey++)%key.length();
+        indexKey = (++indexKey)%key.length();
         return key.charAt(indexKey);
     }
 
