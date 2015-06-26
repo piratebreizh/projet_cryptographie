@@ -77,7 +77,8 @@ public class TranspositionCipher implements ICipher {
     private String getEncodedBlock(String block) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < keyList.size(); i++) {
-            builder.append(block.charAt(keyList.get(i)));
+            if(keyList.get(i) < keyList.size())
+                builder.append(block.charAt(keyList.get(i)));
         }
 
         return builder.toString();
@@ -86,8 +87,10 @@ public class TranspositionCipher implements ICipher {
     private String getDecodedBlock(String codedString) {
         StringBuilder builder = new StringBuilder();
         for(int i=0 ; i<keyList.size() ; i++){
-            int index = keyList.indexOf(i);
-            builder.append(codedString.charAt(index));
+            if(keyList.get(i) < keyList.size()) {
+                int index = keyList.indexOf(i);
+                builder.append(codedString.charAt(index));
+            }
         }
 
         return builder.toString();
