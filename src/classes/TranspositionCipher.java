@@ -13,7 +13,7 @@ import java.util.Collections;
 
 public class TranspositionCipher implements ICipher {
     private ArrayList<Integer> keyList;
-    private static int sizeKey = 10;
+    private static int sizeKey = 5;
 
 
     @Override
