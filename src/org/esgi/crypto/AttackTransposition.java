@@ -17,9 +17,9 @@ public class AttackTransposition implements IExecute{
     
     public static void main(String[] args) {
 		AttackTransposition a = new AttackTransposition();
-        File encoded = new File("encoded.txt");
-        File key = new File("key.txt");
-        File decoded = new File("decoded.txt");
+        File encoded = new File("encodedTranspo.txt");
+        File key = new File("keyTranspo.txt");
+        File decoded = new File("decodedTranspo.txt");
 		a.execute(encoded, key, decoded);
 	}
 }

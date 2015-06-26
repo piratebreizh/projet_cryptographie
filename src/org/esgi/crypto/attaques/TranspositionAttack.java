@@ -9,35 +9,37 @@ public class TranspositionAttack {
     private ArrayList<Character> frequenceInverse;
     private Map<Character, ArrayList<Integer>> positionsLettres;
     private String content;
-    
+
     private ArrayList<String> wordWithLetter;
 
     public TranspositionAttack() {
         frequenceInverse = new ArrayList<Character>();
     }
 
-    public void launchAttack(File encoded, File out,File dic){
+    public void launchAttack(File encoded, File decoded, File dic) {
         findLettresPositions(encoded);
         readFile(encoded);
         try {
-        	PrintWriter pr = new PrintWriter(new BufferedWriter( new FileWriter(out, true)));
-			searchWordWithLetterInFile(dic,"K");
-		
-        for(int i=0;i<10;i++){
-        	ArrayList<Integer> pos = positionsLettres.get('K');
-        	for(Integer j: pos){
-        		String s = getStringAroundPosition((int)j, i, i);
-        		ArrayList<String> a = anagram(s);	
-    			for(String an: a){        					
-    				pr.println(a);
-    			}        				
-      		}
+            PrintWriter pr = new PrintWriter(new BufferedWriter(new FileWriter(decoded, true)));
+            searchWordWithLetterInFile(dic, "L");
 
-        }
+            for (int i = 1; i < 10; i++) {
+                ArrayList<Integer> pos = positionsLettres.get('L');
+                for (Integer j : pos) {
+                    String s = getStringAroundPosition(j, i, i);
+                    ArrayList<String> a = anagram(s);
+                    for (String an : a) {
+                        pr.println(an);
+                    }
+                }
+
+            }
+            pr.flush();
+            pr.close();
         } catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     private void readFile(File encoded) {
@@ -152,47 +154,48 @@ public class TranspositionAttack {
 
         // Convert sorted map back to a Map
         Map<Character, Float> sortedMap = new LinkedHashMap<Character, Float>();
-        for (Iterator<Map.Entry<Character, Float>> it = list.iterator(); it.hasNext();) {
+        for (Iterator<Map.Entry<Character, Float>> it = list.iterator(); it.hasNext(); ) {
             Map.Entry<Character, Float> entry = it.next();
             sortedMap.put(entry.getKey(), entry.getValue());
         }
         return sortedMap;
     }
-    
-    public void searchWordWithLetterInFile(File dic,CharSequence c) throws Exception{
-    	wordWithLetter = new ArrayList<String>();
-    	try (BufferedReader br = new BufferedReader(new FileReader(dic))) {
-    	    String line;
-    	    while ((line = br.readLine()) != null) {
-    	       if (line.contains(c)){
-    	    	   wordWithLetter.add(line);
-    	       }
-    	    }
-    	}
-    }
-    
-    public ArrayList<String> anagram(String s){    	
-    	ArrayList<String> aPossibles = new ArrayList<>();
-    	for (int i = 0; i < s.length(); i++) {
-            final List<String> remaining = anagram(s.substring(0, i) + s.substring(i + 1));
-            for (int j = 0; j < remaining.size(); j++) {
-            	aPossibles.add(s.charAt(i) + remaining.get(j));
+
+    public void searchWordWithLetterInFile(File dic, CharSequence c) throws Exception {
+        wordWithLetter = new ArrayList<String>();
+        try (BufferedReader br = new BufferedReader(new FileReader(dic))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line);
+                if (line.contains(c)) {
+                    wordWithLetter.add(line);
+                }
             }
         }
-    	return aPossibles;
     }
-    
 
-    public void findLettresPositions(File encoded){
+    public ArrayList<String> anagram(String s) {
+        ArrayList<String> aPossibles = new ArrayList<>();
+        for (int i = 0; i < s.length(); i++) {
+            final List<String> remaining = anagram(s.substring(0, i) + s.substring(i + 1));
+            for (int j = 0; j < remaining.size(); j++) {
+                aPossibles.add(s.charAt(i) + remaining.get(j));
+            }
+        }
+        return aPossibles;
+    }
+
+
+    public void findLettresPositions(File encoded) {
         positionsLettres = new HashMap<>();
-        try{
+        try {
             FileReader reader = new FileReader(encoded);
             int intChar;
             int position = 0;
-            while ((intChar = reader.read()) != -1){
+            while ((intChar = reader.read()) != -1) {
                 char ch = (char) intChar;
                 ArrayList<Integer> positions = new ArrayList<>();
-                if(positionsLettres.containsKey(ch))
+                if (positionsLettres.containsKey(ch))
                     positions = positionsLettres.get(ch);
                 positions.add(position);
                 positionsLettres.put(ch, positions);
@@ -200,11 +203,14 @@ public class TranspositionAttack {
             }
             reader.close();
 
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
     }
 
-    private String getStringAroundPosition(int position, int ecartGauche, int ecartDroite){
-        return content.substring(position-ecartGauche, position+ecartDroite);
+    private String getStringAroundPosition(int position, int ecartGauche, int ecartDroite) {
+        int start = position - ecartGauche >= 0 ? position - ecartGauche : 0;
+        int end = position + ecartDroite < content.length() ? position + ecartDroite : content.length();
+        return content.substring(start, end);
     }
 
 
