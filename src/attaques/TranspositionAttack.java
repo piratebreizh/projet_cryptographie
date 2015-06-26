@@ -9,7 +9,6 @@ public class TranspositionAttack {
     private ArrayList<Character> frequenceInverse;
     private Map<Character, ArrayList<Integer>> positionsLettres;
     private String content;
-    private ArrayList<Character> frequence;
     
     private ArrayList<String> wordWithLetter;
 
