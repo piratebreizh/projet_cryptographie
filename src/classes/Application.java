@@ -24,6 +24,7 @@ public class Application {
         File decodedTranspo = new File(BASE_PATH+"decodedTranspo.txt");
 
         ICipher cipher = new TranspositionCipher();
+        cipher.generateKey(keyTranspo);
         cipher.encode(message,keyTranspo,encodedTranspo);
         cipher.decode(encodedTranspo, keyTranspo, decodedTranspo);
     }
