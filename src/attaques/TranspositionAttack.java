@@ -16,9 +16,28 @@ public class TranspositionAttack {
         frequenceInverse = new ArrayList<Character>();
     }
 
-    public void launchAttack(File encoded, File out){
+    public void launchAttack(File encoded, File out,File dic){
         findLettresPositions(encoded);
         readFile(encoded);
+        try {
+			searchWordWithLetterInFile(dic,"K");
+		
+        for(int i=0;i<10;i++){
+        	for(int <getStringAroundPosition(positionsLettres.get('K'), i, i);j++){
+        		ArrayList<String> a = anagram();	
+        	}
+        	for(String object: list){
+        		  System.out.println(object)
+        		}
+        	
+        	PrintWriter pr = new PrintWriter(new BufferedWriter( new FileWriter(out, true)));
+        	
+        	pr.println(
+        }
+        } catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     private void readFile(File encoded) {
