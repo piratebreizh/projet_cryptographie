@@ -14,8 +14,19 @@ public class Application {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-        encodePolyAlpha();
+        encodeTransposition();
 	}
+
+    private static void encodeTransposition() {
+        File keyTranspo = new File(BASE_PATH+"keyTranspo.txt");
+        File message = new File(BASE_PATH+"message.txt");
+        File encodedTranspo = new File(BASE_PATH+"encodedTranspo.txt");
+        File decodedTranspo = new File(BASE_PATH+"decodedTranspo.txt");
+
+        ICipher cipher = new TranspositionCipher();
+        cipher.encode(message,keyTranspo,encodedTranspo);
+        cipher.decode(encodedTranspo, keyTranspo, decodedTranspo);
+    }
 
     private static void encodePolyAlpha() {
         File keyPA = new File(BASE_PATH+"keyPA.txt");
