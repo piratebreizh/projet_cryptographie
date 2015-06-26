@@ -1,4 +1,4 @@
-package attaques;
+package org.esgi.crypto.attaques;
 
 import java.io.*;
 import java.util.*;

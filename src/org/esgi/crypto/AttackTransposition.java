@@ -1,7 +1,7 @@
 package org.esgi.crypto;
 
-import attaques.TranspositionAttack;
-import interfaces.IExecute;
+import org.esgi.crypto.attaques.TranspositionAttack;
+import org.esgi.crypto.interfaces.IExecute;
 
 import java.io.File;
 

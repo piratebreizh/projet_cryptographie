@@ -1,4 +1,4 @@
-package attaques;
+package org.esgi.crypto.attaques;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import classes.CesarCipher;
+import org.esgi.crypto.classes.CesarCipher;
 
 public class BruteForce {
 

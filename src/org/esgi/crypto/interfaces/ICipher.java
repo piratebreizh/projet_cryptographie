@@ -1,4 +1,4 @@
-package interfaces;
+package org.esgi.crypto.interfaces;
 
 import java.io.File;
 

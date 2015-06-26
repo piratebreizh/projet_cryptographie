@@ -1,9 +1,9 @@
-package classes;
+package org.esgi.crypto.classes;
 
-import attaques.BruteForce;
-import attaques.MonoEncodedAttack;
-import attaques.TranspositionAttack;
-import interfaces.ICipher;
+import org.esgi.crypto.attaques.BruteForce;
+import org.esgi.crypto.attaques.MonoEncodedAttack;
+import org.esgi.crypto.attaques.TranspositionAttack;
+import org.esgi.crypto.interfaces.ICipher;
 
 import java.io.File;
 

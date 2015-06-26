@@ -1,4 +1,4 @@
-package classes;
+package org.esgi.crypto.classes;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,10 +9,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.Map.Entry;
 
-import interfaces.ICipher;
+import org.esgi.crypto.interfaces.ICipher;
 
 public class CesarCipher implements ICipher {
 

@@ -1,7 +1,6 @@
-package classes;
+package org.esgi.crypto.classes;
 
-import interfaces.ICipher;
-import org.w3c.dom.html.HTMLTableColElement;
+import org.esgi.crypto.interfaces.ICipher;
 
 import java.io.File;
 import java.io.FileInputStream;

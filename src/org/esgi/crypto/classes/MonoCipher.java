@@ -1,14 +1,11 @@
-package classes;
+package org.esgi.crypto.classes;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Random;
 
-import interfaces.ICipher;
+import org.esgi.crypto.interfaces.ICipher;
 
 public class MonoCipher implements ICipher {
 

@@ -1,6 +1,6 @@
-package classes;
+package org.esgi.crypto.classes;
 
-import interfaces.ICipher;
+import org.esgi.crypto.interfaces.ICipher;
 
 import java.io.*;
 
